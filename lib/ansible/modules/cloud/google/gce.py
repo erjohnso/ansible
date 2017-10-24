@@ -583,9 +583,12 @@ def create_instances(module, gce, instance_names, number, lc_zone):
     instance_names = []
     instance_json_data = []
     for inst in new_instances:
-        d = get_instance_info(inst)
-        instance_names.append(d['name'])
-        instance_json_data.append(d)
+        try:
+            d = get_instance_info(inst)
+            instance_names.append(d['name'])
+            instance_json_data.append(d)
+        except AttributeError:
+            continue
 
     return (changed, instance_json_data, instance_names)
 
